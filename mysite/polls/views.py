@@ -1,9 +1,10 @@
 # with render you don't need HttpResponse or loader
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views import generic
 
-from .models import Question
+from .models import Choice, Question
 
 # Create your views here.
 def index(request):
