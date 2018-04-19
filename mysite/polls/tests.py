@@ -63,6 +63,8 @@ class QuestionDetailViewTest(TestCase):
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
 
+# add testing for Results
+
 class QuestionModelTests(TestCase):
 
     def test_was_published_recently_with_future_question(self):
@@ -82,3 +84,7 @@ class QuestionModelTests(TestCase):
         time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
         recent_question = Question(pub_date=time)
         self.assertIs(recent_question.was_published_recently(), True)
+
+# add testing for Choices
+# add testing for Questions - Choices
+# test for admin only to see unpublished questions, but not regular users
