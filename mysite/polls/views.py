@@ -7,20 +7,25 @@ from django.views import generic
 from .models import Choice, Question
 
 # Create your views here.
-def index(request):
-    latest_questions_list = Question.objects.order_by('-pub_date')[:5]
-    # Creates the context dictionary objects
-    context = {'latest_question_list': latest_questions_list}
-    return render(request, 'polls/index.html', context)
 
-def detail(request, question_id):
-    # returns a 404 error if there's no object
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/detail.html', {'question': question})
+# these classes are examples of the generic views in Django
+# ListView will display a lits of objects
+class IndexView(generic.ListView):
+    template_name = 'polls/index.html'
+    context_object_name = 'latest_question_list'
 
-def results(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/results.html', {'question': question})
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return Question.objects.order_by('-pub_date')[:5]
+
+# DetailView will display a detail of a page for a particular type of object
+class DetailView(generic.DetailView):
+    model = Question
+    template_name = 'polls/detail.html'
+
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = 'polls/results.html'
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
